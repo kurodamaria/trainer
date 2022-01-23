@@ -11,8 +11,7 @@ import 'subject_logic.dart';
 class SubjectPage extends StatelessWidget {
   SubjectPage({Key? key}) : super(key: key);
 
-  final logic = Get.find<SubjectLogic>();
-  final state = Get.find<SubjectLogic>().state;
+  final logic = Get.find<SubjectLogic>(); final state = Get.find<SubjectLogic>().state;
 
   @override
   Widget build(BuildContext context) {

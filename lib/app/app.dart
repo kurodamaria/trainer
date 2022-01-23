@@ -21,13 +21,16 @@ class TrainerApp extends StatelessWidget {
           ),
           actionsIconTheme: IconThemeData(
             color: Colors.black,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black
           )
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.white,
           foregroundColor: Colors.lightBlueAccent
         ),
-        scaffoldBackgroundColor: Colors.grey[200]
+        scaffoldBackgroundColor: Colors.white
       ),
     );
   }

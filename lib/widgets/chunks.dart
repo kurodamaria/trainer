@@ -1,16 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/pages/subject/subject_logic.dart';
-import 'package:trainer/services/services.dart';
-import 'package:trainer/widgets/attempts.dart';
 import 'package:trainer/widgets/bottom_sheet_container.dart';
 import 'package:trainer/widgets/bottom_sheet_handler.dart';
-import 'package:trainer/widgets/error_box.dart';
-import 'package:trainer/widgets/hive_box_list_view.dart';
+import 'package:trainer/widgets/text_input_dialog.dart';
 
 class ChunkView extends StatelessWidget {
   const ChunkView({Key? key, required this.chunk}) : super(key: key);
@@ -64,7 +58,16 @@ class _Actions extends StatelessWidget {
               Tooltip(
                 message: 'Edit',
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final result = await Get.dialog(TextInputDialog(
+                      labels: const ['Name', 'Reference'],
+                      defaultValues: [chunk.name, chunk.ref],
+                    ));
+                    if (result != null) {
+                      final logic = Get.find<SubjectLogic>();
+                      await logic.updateChunk(chunk, result[0], result[1]);
+                    }
+                  },
                   child: Icon(Icons.edit),
                 ),
               ),
@@ -79,16 +82,7 @@ class _Actions extends StatelessWidget {
                 message: 'Success',
                 child: TextButton(
                   onPressed: () async {
-                    chunk.points += 100;
-                    chunk.save();
-
-                    final attempt = Attempt.minimal(
-                      memo: 'SUCCEDD',
-                      success: true,
-                      chunkKey: chunk.key,
-                    );
-                    await attempt.save();
-
+                    await _addAttempt(true);
                   },
                   child: Icon(Icons.plus_one),
                 ),
@@ -97,14 +91,7 @@ class _Actions extends StatelessWidget {
                 message: 'Fail',
                 child: TextButton(
                   onPressed: () async {
-                    chunk.points -= 100;
-                    chunk.save();
-                    final attempt = Attempt.minimal(
-                      memo: 'FAILED',
-                      success: false,
-                      chunkKey: chunk.key,
-                    );
-                    await attempt.save();
+                    await _addAttempt(false);
                   },
                   child: Icon(Icons.exposure_minus_1),
                 ),
@@ -114,6 +101,21 @@ class _Actions extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _addAttempt(bool success) async {
+    final logic = Get.find<SubjectLogic>();
+    final result = await Get.dialog(TextInputDialog(labels: ['Memo']));
+
+    if (result != null) {
+      if (success) {
+        await logic.success(chunk, result[0]);
+      } else {
+        await logic.fail(chunk, result[0]);
+      }
+    } else {
+      Get.rawSnackbar(message: 'You must input memo.');
+    }
   }
 }
 
@@ -160,32 +162,6 @@ class _AttemptsSheet extends StatelessWidget {
         children: [
           BottomSheetHandler(),
           Text('${chunk.name}'),
-          FutureBuilder<Box<Attempt>>(
-            future: Services.persist.openAttemptBox(chunk),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.length == 0) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 100),
-                      child: Text('Empty', style: Get.textTheme.headline3),
-                    );
-                  }
-                  return HiveBoxListView<Attempt>(
-                    itemBuilder: (context, index, item) =>
-                        AttemptView(attempt: item),
-                    box: snapshot.data!,
-                  );
-                } else {
-                  return ErrorBox(
-                    title: 'Error Loading Hints',
-                    message: 'Really sorry',
-                  );
-                }
-              }
-              return Container();
-            },
-          )
         ],
       ),
     );

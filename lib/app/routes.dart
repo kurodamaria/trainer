@@ -20,7 +20,7 @@ class Routes {
     binding: TestBinding(),
   );
 
-  static const initialRoute = '/test';
+  static const initialRoute = '/';
 
   static final getPages = <GetPage>[
     subjectsPage,

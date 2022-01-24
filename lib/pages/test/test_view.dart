@@ -57,7 +57,10 @@ class _ChunkSimpleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(chunk.front),
+        title: TeXView(
+          child: TeXViewMarkdown(chunk.front),
+          style: TeXViewStyle(),
+        ),
         onTap: () {
           Get.to(() => _ChunkVie(chunk: chunk));
         },

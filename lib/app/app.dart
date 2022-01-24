@@ -30,7 +30,7 @@ class TrainerApp extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.lightBlueAccent
         ),
-        scaffoldBackgroundColor: Colors.white
+        scaffoldBackgroundColor: Colors.grey[300]
       ),
     );
   }

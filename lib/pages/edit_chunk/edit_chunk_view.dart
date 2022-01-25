@@ -25,7 +25,6 @@ class EditChunkPage extends StatelessWidget {
                   labelText: 'Content',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 ),
-                textInputAction: TextInputAction.next,
                 maxLines: 10,
                 onChanged: (value) {
                   logic.setContent(value);
@@ -50,7 +49,6 @@ class EditChunkPage extends StatelessWidget {
                   labelText: 'Hints',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 ),
-                textInputAction: TextInputAction.next,
                 maxLines: 10,
                 onChanged: (value) {
                   logic.setHints(value);
@@ -63,7 +61,6 @@ class EditChunkPage extends StatelessWidget {
                   labelText: 'tags, separated with a space',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 ),
-                textInputAction: TextInputAction.next,
                 maxLines: 5,
                 onChanged: (value) {
                   if (value.isNotEmpty) {

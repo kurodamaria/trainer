@@ -8,9 +8,9 @@ class SubjectLogic extends GetxController {
 
   Future<void> addChunk(String name, String ref) async {
     final chunk = Chunk.minimal(
-      name: name,
+      content: name,
       ref: ref,
-      subjectId: state.subject.id,
+      subjectKey: state.subject.id,
     );
     chunk.save();
   }

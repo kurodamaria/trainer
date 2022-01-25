@@ -68,13 +68,14 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       chunkBoxName: fields[6] as String,
       failTimes: fields[7] as int,
       hints: fields[8] as String,
+      tags: (fields[9] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Chunk obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
@@ -90,7 +91,9 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       ..writeByte(7)
       ..write(obj.failTimes)
       ..writeByte(8)
-      ..write(obj.hints);
+      ..write(obj.hints)
+      ..writeByte(9)
+      ..write(obj.tags);
   }
 
   @override

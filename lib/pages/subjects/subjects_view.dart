@@ -19,7 +19,7 @@ class SubjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subjects'),
+        title: const Text('Chunk Collections'),
       ),
       body: HiveBoxListBuilder<Subject>(
         boxName: state.subjects.name,
@@ -30,7 +30,7 @@ class SubjectsPage extends StatelessWidget {
       ),
       floatingActionButton: AddFloatingActionButton(
         onPressed: () async {
-          final result = (await Get.dialog(TextInputDialog(labels: ['Name'])))
+          final result = (await Get.dialog(const TextInputDialog(labels: ['Name'])))
               as List<String>?;
           if (result != null) {
             final name = result[0];

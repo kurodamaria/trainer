@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trainer/widgets/preview_chunk.dart';
+import 'package:trainer/widgets/chunk_card.dart';
 
 import 'preview_chunk_logic.dart';
 
@@ -30,17 +30,8 @@ class PreviewChunkPage extends StatelessWidget {
         ),
         body: ChunkCard(
           chunk: state.chunk,
-          trailing: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(onPressed: () {}, child: Text('Edit')),
-              TextButton(
-                onPressed: () {},
-                child: Text('Fail'),
-              ),
-            ],
+          showHints: state.showHints,
           ),
-        ),
       ),
     );
   }

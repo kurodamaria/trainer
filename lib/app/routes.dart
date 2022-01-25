@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:trainer/pages/add_chunk/add_chunk_binding.dart';
 import 'package:trainer/pages/add_chunk/add_chunk_view.dart';
+import 'package:trainer/pages/edit_chunk/edit_chunk_binding.dart';
+import 'package:trainer/pages/edit_chunk/edit_chunk_view.dart';
 import 'package:trainer/pages/preview_chunk/preview_chunk_binding.dart';
 import 'package:trainer/pages/preview_chunk/preview_chunk_view.dart';
 import 'package:trainer/pages/subject/subject_binding.dart';
@@ -23,6 +25,11 @@ class Routes {
     page: () => AddChunkPage(),
     binding: AddChunkBinding(),
   );
+  static final editChunkPage = GetPage(
+    name: '/edit_chunk',
+    page: () => EditChunkPage(),
+    binding: EditChunkBinding(),
+  );
   static final previewChunkPage = GetPage(
     name: '/preview_chunk',
     page: () => PreviewChunkPage(),
@@ -41,6 +48,7 @@ class Routes {
     subjectPage,
     addChunkPage,
     previewChunkPage,
+    editChunkPage,
     testPage,
   ];
 }

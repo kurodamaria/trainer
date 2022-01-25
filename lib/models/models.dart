@@ -15,6 +15,7 @@ class Subject extends HiveObject {
   final String chunkBoxName;
 
   @HiveField(4)
+
   /// id is key, key is id
   final String id;
 
@@ -71,6 +72,7 @@ class Chunk extends HiveObject {
   final String subjectKey;
 
   @HiveField(5)
+
   /// id is key, key is id
   final String id;
 
@@ -83,6 +85,9 @@ class Chunk extends HiveObject {
   @HiveField(8)
   String hints;
 
+  @HiveField(9)
+  List<String> tags;
+
   Chunk({
     required this.content,
     required this.ref,
@@ -92,23 +97,25 @@ class Chunk extends HiveObject {
     required this.chunkBoxName,
     required this.failTimes,
     required this.hints,
+    required this.tags,
   });
 
   factory Chunk.minimal({
-    required String name,
+    required String content,
     required String ref,
-    required String subjectId,
+    required String subjectKey,
   }) {
     final id = Services.uuid();
     return Chunk(
-      content: name,
+      content: content,
       ref: ref,
       createdAt: DateTime.now(),
-      subjectKey: subjectId,
+      subjectKey: subjectKey,
       id: id,
-      chunkBoxName: subjectId,
+      chunkBoxName: subjectKey,
       failTimes: 0,
-      hints: ''
+      hints: '',
+      tags: [],
     );
   }
 

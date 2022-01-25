@@ -8,9 +8,9 @@ class AddChunkLogic extends GetxController {
   final AddChunkState state = AddChunkState();
 
   final _chunk = Chunk.minimal(
-    name: '',
+    content: '',
     ref: '',
-    subjectId: Get.find<SubjectLogic>().state.subject.id,
+    subjectKey: Get.find<SubjectLogic>().state.subject.id,
   );
 
   void _save() {

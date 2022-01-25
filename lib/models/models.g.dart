@@ -60,14 +60,14 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Chunk(
-      name: fields[1] as String,
+      content: fields[1] as String,
       ref: fields[2] as String,
       createdAt: fields[3] as DateTime,
       subjectKey: fields[4] as String,
       id: fields[5] as String,
-      attemptBoxName: fields[6] as String,
-      chunkBoxName: fields[7] as String,
-      points: fields[8] as int,
+      chunkBoxName: fields[6] as String,
+      failTimes: fields[7] as int,
+      hints: fields[8] as String,
     );
   }
 
@@ -76,7 +76,7 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
     writer
       ..writeByte(8)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.content)
       ..writeByte(2)
       ..write(obj.ref)
       ..writeByte(3)
@@ -86,11 +86,11 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       ..writeByte(5)
       ..write(obj.id)
       ..writeByte(6)
-      ..write(obj.attemptBoxName)
-      ..writeByte(7)
       ..write(obj.chunkBoxName)
+      ..writeByte(7)
+      ..write(obj.failTimes)
       ..writeByte(8)
-      ..write(obj.points);
+      ..write(obj.hints);
   }
 
   @override
@@ -100,55 +100,6 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ChunkAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
-class AttemptAdapter extends TypeAdapter<Attempt> {
-  @override
-  final int typeId = 3;
-
-  @override
-  Attempt read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return Attempt(
-      createdAt: fields[1] as DateTime,
-      success: fields[2] as bool,
-      memo: fields[3] as String,
-      chunkKey: fields[4] as String,
-      chunkBoxName: fields[5] as String,
-      attemptBoxName: fields[6] as String,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, Attempt obj) {
-    writer
-      ..writeByte(6)
-      ..writeByte(1)
-      ..write(obj.createdAt)
-      ..writeByte(2)
-      ..write(obj.success)
-      ..writeByte(3)
-      ..write(obj.memo)
-      ..writeByte(4)
-      ..write(obj.chunkKey)
-      ..writeByte(5)
-      ..write(obj.chunkBoxName)
-      ..writeByte(6)
-      ..write(obj.attemptBoxName);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AttemptAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

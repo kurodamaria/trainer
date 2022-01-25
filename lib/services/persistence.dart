@@ -6,7 +6,6 @@ class _PersistenceService {
   Future<void> _init() async {
     Hive.registerAdapter(SubjectAdapter());
     Hive.registerAdapter(ChunkAdapter());
-    Hive.registerAdapter(AttemptAdapter());
 
     await _openSubjectsBox();
   }
@@ -19,9 +18,5 @@ class _PersistenceService {
 
   Future<Box<Chunk>> openChunkBox(Subject subject) async {
     return await Hive.openBox<Chunk>(subject.chunkBoxName);
-  }
-
-  Future<Box<Attempt>> openAttemptBox(Chunk chunk) async {
-    return await Hive.openBox<Attempt>(chunk.attemptBoxName);
   }
 }

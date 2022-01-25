@@ -13,12 +13,16 @@ class SwitchWithDescription extends StatelessWidget {
   final RxBool value;
   final TextStyle? descriptionStyle;
 
+  static final _defaultDescriptionStyle = TextStyle(
+    fontSize: 12,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(description, style: descriptionStyle),
         Obx(() {
           return Switch(
             onChanged: (v) {
@@ -27,6 +31,12 @@ class SwitchWithDescription extends StatelessWidget {
             value: value.value,
           );
         }),
+        Text(
+          description,
+          style: Get.textTheme.bodyText1!
+              .merge(_defaultDescriptionStyle)
+              .merge(descriptionStyle),
+        ),
       ],
     );
   }

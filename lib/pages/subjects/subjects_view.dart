@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trainer/models/models.dart';
+import 'package:trainer/widgets/add_floating_action_button.dart';
 import 'package:trainer/widgets/delete_by_dismiss_hive_box_item.dart';
 import 'package:trainer/widgets/hive_box_list_builder.dart';
 import 'package:trainer/widgets/subjects.dart';
@@ -27,7 +28,7 @@ class SubjectsPage extends StatelessWidget {
           item: item,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: AddFloatingActionButton(
         onPressed: () async {
           final result = (await Get.dialog(TextInputDialog(labels: ['Name'])))
               as List<String>?;

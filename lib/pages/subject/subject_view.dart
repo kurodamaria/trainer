@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/widgets/chunks.dart';
 import 'package:trainer/widgets/delete_by_dismiss_hive_box_item.dart';
@@ -28,12 +29,7 @@ class SubjectPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = (await Get.dialog(
-                  TextInputDialog(labels: ['Name', 'References'])))
-              as List<String>?;
-          if (result != null) {
-            logic.addChunk(result[0], result[1]);
-          }
+          Get.toNamed(Routes.addChunkPage.name);
         },
       ),
     );

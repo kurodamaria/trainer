@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/pages/subjects/subjects_logic.dart';
 import 'package:trainer/services/services.dart';
+import 'package:trainer/widgets/text_input_dialog.dart';
 
 class SubjectView extends StatelessWidget {
   const SubjectView({Key? key, required this.subject}) : super(key: key);
@@ -27,6 +29,13 @@ class SubjectView extends StatelessWidget {
         onPressed: () async {
           final logic = Get.find<SubjectsLogic>();
           await logic.toSubjectPage(subject);
+        },
+        onLongPress: () async {
+          final result = await Get.dialog(TextInputDialog(labels: ['Name'], defaultValues: [subject.name]));
+          if (result != null) {
+            subject.name = result[0];
+            await subject.save();
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

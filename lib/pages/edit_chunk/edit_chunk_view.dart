@@ -21,6 +21,7 @@ class EditChunkPage extends StatelessWidget {
           children: [
             _InputFieldCard(
               child: TextFormField(
+                initialValue: state.content.value,
                 decoration: const InputDecoration(
                   labelText: 'Content',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -33,6 +34,7 @@ class EditChunkPage extends StatelessWidget {
             ),
             _InputFieldCard(
               child: TextFormField(
+                initialValue: state.ref.value,
                 decoration: const InputDecoration(
                   labelText: 'Ref',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -45,6 +47,7 @@ class EditChunkPage extends StatelessWidget {
             ),
             _InputFieldCard(
               child: TextFormField(
+                initialValue: state.hints.value,
                 decoration: const InputDecoration(
                   labelText: 'Hints',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -57,6 +60,7 @@ class EditChunkPage extends StatelessWidget {
             ),
             _InputFieldCard(
               child: TextFormField(
+                initialValue: state.tags.join(' '),
                 decoration: const InputDecoration(
                   labelText: 'tags, separated with a space',
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),

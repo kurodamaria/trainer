@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SwitchWithDescription extends StatelessWidget {
-  const SwitchWithDescription({
+  SwitchWithDescription({
     Key? key,
     required this.description,
-    required this.value,
+    bool? initialValue,
     this.descriptionStyle,
-  }) : super(key: key);
+    this.onChanged,
+  })  : value = (initialValue ?? false).obs,
+        super(key: key);
 
   final String description;
   final RxBool value;
   final TextStyle? descriptionStyle;
+  final ValueChanged? onChanged;
 
-  static final _defaultDescriptionStyle = TextStyle(
-    fontSize: 12,
-  );
+  static final _defaultDescriptionStyle = TextStyle(fontSize: 12);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class SwitchWithDescription extends StatelessWidget {
           return Switch(
             onChanged: (v) {
               value.value = v;
+              onChanged?.call(v);
             },
             value: value.value,
           );

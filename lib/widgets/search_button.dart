@@ -17,9 +17,7 @@ class SearchButton extends StatelessWidget {
           Get.toNamed(
             Routes.searchPage.name,
             arguments: {
-              'searchType': SearchType.content,
               'chunkBoxes': Services.persist.subjectsBox.values.map((e) => e.chunkBoxName).toList(),
-              'keyword': result[0]
             },
           );
         }

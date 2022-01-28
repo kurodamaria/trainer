@@ -14,17 +14,10 @@ class ChunkView extends StatelessWidget {
 
   final Chunk chunk;
 
-  // final chunk = Chunk(
-  //   front: r'求$$\frac{dy}{dx}+y\sin x=0$$的通解',
-  //   refs: '364 9.1.3',
-  //   hints: [r'$$g(y)dy=f(x)dx$$', r'$$\frac{1}{y}dy=-\sin xdx$$'],
-  // );
-
   final showHints = true.obs;
 
   @override
   Widget build(BuildContext context) {
-
     return Card(
       shadowColor: Colors.black,
       elevation: 5,
@@ -40,13 +33,20 @@ class ChunkView extends StatelessWidget {
                 Text('${DateFormat.yMMMd().format(chunk.createdAt)}',
                     style: Get.textTheme.headline6),
                 IconButton(
-                  onPressed: (){},
+                  onPressed: () {},
                   icon: Icon(Icons.edit),
                 ),
-                SwitchWithDescription(description: 'Hints', value: showHints),
+                SwitchWithDescription(
+                  description: 'Hints',
+                  initialValue: chunk.markedNeedReview,
+                  onChanged: (value){
+                    final logic = Get.find<SubjectLogic>();
+                    logic.markChunk(chunk, value);
+                  },
+                ),
               ],
             ),
-            const Divider(color: Colors.black),
+            const Divider(),
             const Padding(
               padding: EdgeInsets.all(32.0),
               child: Markdown(r'求$$\frac{dy}{dx}+y\sin x=0$$的通解'),
@@ -56,7 +56,7 @@ class ChunkView extends StatelessWidget {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Divider(color: Colors.black),
+                    Divider(),
                     Markdown(r'$$g(y)dy=f(x)dx$$')
                   ],
                 );

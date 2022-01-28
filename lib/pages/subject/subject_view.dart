@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
+import 'package:trainer/pages/subject/subject_state.dart';
+import 'package:trainer/pages/subjects/subjects_state.dart';
 import 'package:trainer/widgets/add_floating_action_button.dart';
 import 'package:trainer/widgets/chunk_card.dart';
 import 'package:trainer/widgets/chunk_review_actions.dart';
@@ -19,16 +21,36 @@ class SubjectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(state.subject.name)),
-      body: HiveBoxListBuilder<Chunk>(
-        boxName: state.chunkBox.name,
-        itemBuilder: (c, index, item) => DeleteByDismissHiveBoxItem<Chunk>(
-          itemBuilder: (BuildContext context, item) {
-            return ChunkCard(chunk: item, trailing: ChunkReviewActions(chunk: item),);
-          },
-          item: item,
-        ),
+      appBar: AppBar(
+        title: Text(state.subject.name),
       ),
+      body: PageView(
+        children: [
+          _AllChunks(),
+          _MarkedChunks(),
+        ],
+        physics: NeverScrollableScrollPhysics(),
+        controller: state.pageController,
+      ),
+      bottomNavigationBar: Obx(() {
+        return BottomNavigationBar(
+          currentIndex: state.currentFilterIndex.value,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.all_inbox), label: 'All'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notification_important), label: 'Marked'),
+          ],
+          onTap: (index) {
+            logic.switchFilter(index);
+          },
+        );
+      }),
+      endDrawer: Drawer(
+        child: Image.network(
+            'https://simkl.in/episodes/83/8387549bff4f358c8_w.jpg'),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: AddFloatingActionButton(
         onPressed: () async {
           Get.toNamed(
@@ -43,6 +65,52 @@ class SubjectPage extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _AllChunks extends StatelessWidget {
+  _AllChunks({Key? key}) : super(key: key);
+
+  final state = Get.find<SubjectLogic>().state;
+
+  @override
+  Widget build(BuildContext context) {
+    return HiveBoxListBuilder<Chunk>(
+      boxName: state.chunkBox.name,
+      filter: SubjectState.filters[0],
+      itemBuilder: (c, index, item) => DeleteByDismissHiveBoxItem<Chunk>(
+        itemBuilder: (BuildContext context, item) {
+          return ChunkCard(
+            chunk: item,
+            trailing: ChunkReviewActions(chunk: item),
+          );
+        },
+        item: item,
+      ),
+    );
+  }
+}
+
+class _MarkedChunks extends StatelessWidget {
+  _MarkedChunks({Key? key}) : super(key: key);
+
+  final state = Get.find<SubjectLogic>().state;
+
+  @override
+  Widget build(BuildContext context) {
+    return HiveBoxListBuilder<Chunk>(
+      boxName: state.chunkBox.name,
+      filter: SubjectState.filters[1],
+      itemBuilder: (c, index, item) => DeleteByDismissHiveBoxItem<Chunk>(
+        itemBuilder: (BuildContext context, item) {
+          return ChunkCard(
+            chunk: item,
+            trailing: ChunkReviewActions(chunk: item),
+          );
+        },
+        item: item,
       ),
     );
   }

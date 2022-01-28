@@ -59,9 +59,9 @@ class ChunkReviewActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        FailChunkAction(chunk: chunk),
+        // FailChunkAction(chunk: chunk),
         EditChunkAction(chunk: chunk),
       ],
     );

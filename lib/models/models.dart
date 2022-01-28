@@ -88,6 +88,9 @@ class Chunk extends HiveObject {
   @HiveField(9)
   List<String> tags;
 
+  @HiveField(10)
+  bool? markedNeedReview;
+
   Chunk({
     required this.content,
     required this.ref,
@@ -98,6 +101,7 @@ class Chunk extends HiveObject {
     required this.failTimes,
     required this.hints,
     required this.tags,
+    this.markedNeedReview,
   });
 
   factory Chunk.minimal({

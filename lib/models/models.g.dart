@@ -69,13 +69,15 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       failTimes: fields[7] as int,
       hints: fields[8] as String,
       tags: (fields[9] as List).cast<String>(),
+      // Some index out of range error.
+      markedNeedReview: fields[10] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Chunk obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
@@ -93,7 +95,9 @@ class ChunkAdapter extends TypeAdapter<Chunk> {
       ..writeByte(8)
       ..write(obj.hints)
       ..writeByte(9)
-      ..write(obj.tags);
+      ..write(obj.tags)
+      ..writeByte(10)
+      ..write(obj.markedNeedReview);
   }
 
   @override

@@ -3,23 +3,34 @@ import 'package:get/get.dart';
 import 'package:trainer/widgets/chunk_card.dart';
 import 'package:trainer/widgets/error_box.dart';
 import 'package:trainer/widgets/loading_indicator.dart';
+import 'package:trainer/widgets/not_found.dart';
 
 import 'search_logic.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
 
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
   final logic = Get.find<SearchLogic>();
+
   final config = Get.find<SearchLogic>().config;
+
+
+  @override
+  void initState() {
+    super.initState();
+    logic.search();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Result for ${config.keyword}'),
-        actions: [IconButton(onPressed: (){
-          logic.search();
-        }, icon: Icon(Icons.map))],
+        title: const Text('Search Result'),
       ),
       body: logic.obx(
         (state) => ListView.builder(
@@ -28,10 +39,12 @@ class SearchPage extends StatelessWidget {
           },
           itemCount: state!.length,
         ),
-        onLoading: Center(child: LoadingIndicator()),
+        onEmpty: const NotFound(),
+        onLoading: const Center(child: LoadingIndicator()),
         onError: (msg) => Center(
-            child: ErrorBox(
-                title: '', message: msg ?? 'Sorry. No detailed info.')),
+          child:
+              ErrorBox(title: '', message: msg ?? 'Sorry. No detailed info.'),
+        ),
       ),
     );
   }

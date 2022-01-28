@@ -13,7 +13,8 @@ class ChunkCard extends StatelessWidget {
     required this.chunk,
     this.showLevel = true,
     bool? showHints,
-  })  : showHints = showHints?.obs ?? false.obs,
+  })
+      : showHints = showHints?.obs ?? false.obs,
         super(key: key);
 
   final Chunk chunk;
@@ -24,11 +25,14 @@ class ChunkCard extends StatelessWidget {
 
   final bool showLevel;
 
+  /// For render equations and handle render exceptions of flutter_tex.
+  final RxBool _renderMarkdown = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Card(
-        color: showLevel ? calculateLevel(chunk.failTimes) : null,
+        // color: showLevel ? calculateLevel(chunk.failTimes) : null,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -39,25 +43,47 @@ class ChunkCard extends StatelessWidget {
               IntrinsicHeight(
                 child: Row(
                   children: [
-                    Text('${DateFormat.yMMMd().format(chunk.createdAt)}',
+                    Text(DateFormat.yMMMd().format(chunk.createdAt),
                         style: Get.textTheme.bodyText1),
-                    VerticalDivider(color: Colors.black),
+                    const VerticalDivider(),
                     Expanded(
                       child: Center(
                           child:
-                              Text(chunk.ref, style: Get.textTheme.bodyText1)),
+                          Text(chunk.ref, style: Get.textTheme.bodyText1)),
                     ),
-                    VerticalDivider(color: Colors.black),
-                    Text('Fails: ${chunk.failTimes}'),
+                    const VerticalDivider(),
                     Align(
                       child: SwitchWithDescription(
-                          description: 'Hints', value: showHints),
+                        description: 'Mark',
+                        initialValue: chunk.markedNeedReview,
+                        onChanged: (value) {
+                          chunk.markedNeedReview = value;
+                          chunk.save();
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
-              Divider(color: Colors.black),
-              Markdown(chunk.content),
+              const Divider(),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: Obx(() {
+                  debugPrint('build');
+                  if (_renderMarkdown.isTrue) {
+                    return Markdown(chunk.content);
+                  } else {
+                    return Text(chunk.content);
+                  }
+                }),
+                onTap: () {
+                  // send a stream
+                  _renderMarkdown.value = !_renderMarkdown.value;
+                },
+                onDoubleTap: () {
+                  showHints.value = !showHints.value;
+                },
+              ),
               Obx(() {
                 if (showHints.value == true) {
                   if (chunk.hints.isNotEmpty) {
@@ -65,37 +91,38 @@ class ChunkCard extends StatelessWidget {
                   } else {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Divider(color: Colors.black),
+                      children: const [
+                        Divider(),
                         Center(child: Text('No hints :P')),
                       ],
                     );
                   }
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               }),
               if (chunk.tags.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(height: 30),
+                    constraints: const BoxConstraints.tightFor(height: 30),
                     child: ListView.separated(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Chip(
-                        label: Text(
-                          chunk.tags[index],
-                        ),
-                        labelStyle: TextStyle(fontSize: 12),
-                      ),
+                      itemBuilder: (context, index) =>
+                          Chip(
+                            label: Text(
+                              chunk.tags[index],
+                            ),
+                            labelStyle: const TextStyle(fontSize: 12),
+                          ),
                       itemCount: chunk.tags.length,
                       separatorBuilder: (BuildContext context, int index) =>
-                          SizedBox(width: 4),
+                      const SizedBox(width: 4),
                     ),
                   ),
                 ),
-              if (trailing != null) Divider(color: Colors.black),
+              if (trailing != null) const Divider(),
               if (trailing != null) trailing!
             ],
           ),

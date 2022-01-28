@@ -13,30 +13,47 @@ class TrainerApp extends StatelessWidget {
       getPages: Routes.getPages,
       initialRoute: Routes.initialRoute,
       theme: ThemeData.light().copyWith(
-        appBarTheme: ThemeData.light().appBarTheme.copyWith(
-          color: Colors.white,
-          systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark
-          ),
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 18
-          ),
-          actionsIconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.black
-          )
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          dividerColor: Colors.black,
+          primaryColor: Colors.black,
           backgroundColor: Colors.white,
-          foregroundColor: Colors.lightBlueAccent
+          appBarTheme: ThemeData.light().appBarTheme.copyWith(
+              color: Colors.white,
+              systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: Colors.white,
+                  statusBarIconBrightness: Brightness.dark),
+              centerTitle: true,
+              titleTextStyle:
+                  const TextStyle(color: Colors.black, fontSize: 18),
+              actionsIconTheme: const IconThemeData(
+                color: Colors.black,
+              ),
+              iconTheme: const IconThemeData(color: Colors.black)),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.lightBlueAccent,
+          ),
+          scaffoldBackgroundColor: Colors.grey[300]),
+      darkTheme: ThemeData.dark().copyWith(
+        primaryColor: Colors.green,
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.white10,
+        dividerColor: Colors.white60,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.black,
         ),
-        scaffoldBackgroundColor: Colors.grey[300]
+        cardTheme: const CardTheme(
+          color: Colors.black,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+        ),
+        textButtonTheme: const TextButtonThemeData(style: ButtonStyle()),
+        listTileTheme: const ListTileThemeData(
+          tileColor: Colors.black,
+          dense: true
+        ),
       ),
+      themeMode: ThemeMode.dark,
     );
   }
 }

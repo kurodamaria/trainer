@@ -50,7 +50,7 @@ class Subject extends HiveObject {
   /// Update or store the subject in box
   Future<void> save() async {
     if (isInBox == false) {
-      await Services.persist.subjectsBox.put(Services.uuid(), this);
+      await Services.persist.subjectsBox.put(id, this);
     } else {
       await super.save();
     }

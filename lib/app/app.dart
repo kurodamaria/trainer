@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 
@@ -14,6 +15,10 @@ class TrainerApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         appBarTheme: ThemeData.light().appBarTheme.copyWith(
           color: Colors.white,
+          systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark
+          ),
           centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,

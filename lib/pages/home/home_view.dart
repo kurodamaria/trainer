@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
-import 'package:trainer/pages/subject/subject_logic.dart';
-import 'package:trainer/pages/subjects/subjects_logic.dart';
 import 'package:trainer/tools/chunk_filters.dart';
 import 'package:trainer/widgets/add_floating_action_button.dart';
+import 'package:trainer/widgets/export_import_dialog.dart';
 import 'package:trainer/widgets/hive_box_list_builder.dart';
 import 'package:trainer/widgets/subjects.dart';
-import 'package:trainer/widgets/switch_with_description.dart';
 import 'package:trainer/widgets/text_input_dialog.dart';
 
 import 'home_logic.dart';
@@ -27,11 +25,13 @@ class HomePage extends StatelessWidget {
         title: Obx(() {
           return Text(state.currentPageTitle.value);
         }),
+        actions: [const _ExportAsJson()],
       ),
       body: PageView(
         children: [
           CollectionsView(),
-          _SearchPage(),
+          const _SearchPage(),
+          const _StatisticsPage(),
         ],
         physics: const NeverScrollableScrollPhysics(),
         controller: state.pageController,
@@ -48,18 +48,18 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.search),
               label: 'Search',
             ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.graphic_eq), label: 'Statistics')
           ],
           onTap: (page) {
             logic.toPage(page);
           },
         );
       }),
-      drawer: Drawer(
-        child: Image.network(
-            'https://1.bp.blogspot.com/-hYRxrYJULNs/WyCTVJIMDVI/AAAAAAABN7Q/cAcXqxiE3cs9qYB0EgVc1N_bEuhHRsEhQCKgBGAs/s1600/Omake%2BGif%2BAnime%2B-%2BUma%2BMusume%2B-%2BPretty%2BDerby%2B-%2BEpisode%2B12%2B-%2BSilence%2BSuzuka%2BSends%2BEnergy%2BToo.gif'),
+      drawer: const Drawer(
+        child: Center(child: Text('This drawe is useful in the future.')),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: AddFloatingActionButton(
         onPressed: _createANewCollection,
         toolTip: 'Create a new collection',
@@ -99,12 +99,12 @@ class _SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScrollConfiguration(
-      behavior: CupertinoScrollBehavior(),
+      behavior: const CupertinoScrollBehavior(),
       child: ListView(
         children: [
           ListTile(
-            title: Text('All Marked'),
-            leading: Icon(Icons.star, color: Colors.yellow),
+            title: const Text('All Marked'),
+            leading: const Icon(Icons.star, color: Colors.yellow),
             onTap: () {
               final logic = Get.find<HomeLogic>();
               Get.toNamed(
@@ -119,8 +119,8 @@ class _SearchPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Content'),
-            leading: Icon(Icons.star, color: Colors.yellow),
+            title: const Text('Content'),
+            leading: const Icon(Icons.star, color: Colors.yellow),
             onTap: () {
               if (!Get.isSnackbarOpen) {
                 Get.rawSnackbar(message: 'Not implemented yet.');
@@ -128,8 +128,8 @@ class _SearchPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Tag'),
-            leading: Icon(Icons.star, color: Colors.yellow),
+            title: const Text('Tag'),
+            leading: const Icon(Icons.star, color: Colors.yellow),
             onTap: () {
               if (!Get.isSnackbarOpen) {
                 Get.rawSnackbar(message: 'Not implemented yet.');
@@ -138,6 +138,32 @@ class _SearchPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _StatisticsPage extends StatelessWidget {
+  const _StatisticsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Statistics'),
+    );
+  }
+}
+
+class _ExportAsJson extends StatelessWidget {
+  const _ExportAsJson({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: (){
+        Get.dialog(const ExportImportDialog());
+      },
+      icon: const Icon(Icons.import_export),
+      tooltip: 'Export as/Import from json',
     );
   }
 }

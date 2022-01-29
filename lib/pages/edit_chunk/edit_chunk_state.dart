@@ -9,13 +9,13 @@ class EditChunkState {
   late final RxString ref;
   late final RxString hints;
   late final RxList<String> tags;
-  late final RxInt failTimes;
+
+  final RxBool modified = false.obs;
 
   EditChunkState() {
     content = chunk.content.obs;
     ref = chunk.ref.obs;
     hints = chunk.hints.obs;
     tags = chunk.tags.obs;
-    failTimes = chunk.failTimes.obs;
   }
 }

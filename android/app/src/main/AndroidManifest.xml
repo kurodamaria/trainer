@@ -4,7 +4,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="trainer"
+        android:label="Trainer"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

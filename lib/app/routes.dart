@@ -11,14 +11,10 @@ import 'package:trainer/pages/search/search_binding.dart';
 import 'package:trainer/pages/search/search_view.dart';
 import 'package:trainer/pages/subject/subject_binding.dart';
 import 'package:trainer/pages/subject/subject_view.dart';
-import 'package:trainer/pages/subjects/subjects_binding.dart';
-import 'package:trainer/pages/subjects/subjects_view.dart';
 import 'package:trainer/pages/test/test_binding.dart';
 import 'package:trainer/pages/test/test_view.dart';
 
 class Routes {
-  static final subjectsPage = GetPage(
-      name: '/subjects', page: () => SubjectsPage(), binding: SubjectsBinding());
   static final subjectPage = GetPage(
     name: '/subject',
     page: () => SubjectPage(),
@@ -59,7 +55,6 @@ class Routes {
 
   static final getPages = <GetPage>[
     homePage,
-    subjectsPage,
     subjectPage,
     addChunkPage,
     previewChunkPage,

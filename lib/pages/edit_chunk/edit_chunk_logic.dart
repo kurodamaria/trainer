@@ -9,22 +9,22 @@ class EditChunkLogic extends GetxController {
 
   void setContent(String content) {
     state.content.value = content;
+    state.modified.value = true;
   }
 
   void setRef(String ref) {
     state.ref.value = ref;
+    state.modified.value = true;
   }
 
   void setHints(String hints) {
     state.hints.value = hints;
+    state.modified.value = true;
   }
 
   void setTags(List<String> tags) {
     state.tags.value = tags;
-  }
-
-  void setFailTimes(int failTimes) {
-    state.failTimes.value = failTimes;
+    state.modified.value = true;
   }
 
   bool canSave() {
@@ -42,7 +42,6 @@ class EditChunkLogic extends GetxController {
   EditChunkLogic() {
     _chunk = Chunk(
       hints: state.chunk.hints,
-      failTimes: state.chunk.failTimes,
       chunkBoxName: state.chunk.chunkBoxName,
       createdAt: state.chunk.createdAt,
       ref: state.chunk.ref,
@@ -50,13 +49,13 @@ class EditChunkLogic extends GetxController {
       id: state.chunk.id,
       subjectKey: state.chunk.subjectKey,
       tags: state.chunk.tags,
+      marked: state.chunk.marked,
     );
   }
 
   void _dumpToChunk(Chunk chunk) {
     chunk.content = state.content.value;
     chunk.hints = state.hints.value;
-    chunk.failTimes = state.failTimes.value;
     chunk.ref = state.ref.value;
     chunk.tags = state.tags;
   }

@@ -38,7 +38,7 @@ class ChunkView extends StatelessWidget {
                 ),
                 SwitchWithDescription(
                   description: 'Hints',
-                  initialValue: chunk.markedNeedReview,
+                  initialValue: chunk.marked,
                   onChanged: (value){
                     final logic = Get.find<SubjectLogic>();
                     logic.markChunk(chunk, value);

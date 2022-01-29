@@ -32,7 +32,7 @@ class SubjectLogic extends GetxController {
   }
 
   Future<void> markChunk(Chunk chunk, bool value) async {
-    chunk.markedNeedReview = value;
+    chunk.marked = value;
     await chunk.save();
   }
 

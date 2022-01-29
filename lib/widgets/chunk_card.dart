@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:trainer/models/models.dart';
+import 'package:trainer/tools/datetime.dart';
 import 'package:trainer/widgets/markdown.dart';
 import 'package:trainer/widgets/switch_with_description.dart';
 
@@ -13,8 +14,7 @@ class ChunkCard extends StatelessWidget {
     required this.chunk,
     this.showLevel = true,
     bool? showHints,
-  })
-      : showHints = showHints?.obs ?? false.obs,
+  })  : showHints = showHints?.obs ?? false.obs,
         super(key: key);
 
   final Chunk chunk;
@@ -43,24 +43,15 @@ class ChunkCard extends StatelessWidget {
               IntrinsicHeight(
                 child: Row(
                   children: [
-                    Text(DateFormat.yMMMd().format(chunk.createdAt),
-                        style: Get.textTheme.bodyText1),
-                    const VerticalDivider(),
-                    Expanded(
-                      child: Center(
-                          child:
-                          Text(chunk.ref, style: Get.textTheme.bodyText1)),
+                    Text(
+                      DateFormat.yMMMd().format(chunk.createdAt),
+                      style: Get.textTheme.bodyText1,
                     ),
                     const VerticalDivider(),
-                    Align(
-                      child: SwitchWithDescription(
-                        description: 'Mark',
-                        initialValue: chunk.markedNeedReview,
-                        onChanged: (value) {
-                          chunk.markedNeedReview = value;
-                          chunk.save();
-                        },
-                      ),
+                    Text('${DateTimeTools.daysAgo(chunk.createdAt)} Days Ago'),
+                    const VerticalDivider(),
+                    Expanded(
+                      child: Text(chunk.ref, style: Get.textTheme.bodyText1),
                     ),
                   ],
                 ),
@@ -109,16 +100,15 @@ class ChunkCard extends StatelessWidget {
                     child: ListView.separated(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          Chip(
-                            label: Text(
-                              chunk.tags[index],
-                            ),
-                            labelStyle: const TextStyle(fontSize: 12),
-                          ),
+                      itemBuilder: (context, index) => Chip(
+                        label: Text(
+                          chunk.tags[index],
+                        ),
+                        labelStyle: const TextStyle(fontSize: 12),
+                      ),
                       itemCount: chunk.tags.length,
                       separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(width: 4),
+                          const SizedBox(width: 4),
                     ),
                   ),
                 ),

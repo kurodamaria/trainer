@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
+import 'package:trainer/pages/subject/subject_logic.dart';
+import 'package:trainer/widgets/switch_with_description.dart';
 
 class EditChunkAction extends StatelessWidget {
   const EditChunkAction({Key? key, required this.chunk}) : super(key: key);
@@ -22,32 +24,37 @@ class EditChunkAction extends StatelessWidget {
   }
 }
 
-class FailChunkAction extends StatelessWidget {
-  const FailChunkAction({Key? key, required this.chunk}) : super(key: key);
+class MarkChunkAction extends StatelessWidget {
+  const MarkChunkAction({
+    Key? key,
+    required this.chunk,
+  }) : super(key: key);
 
   final Chunk chunk;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        chunk.failTimes += 1;
-        chunk.save();
-      },
-      onLongPress: () {
-        if (chunk.failTimes > 0) {
-          chunk.failTimes -= 1;
-          chunk.save();
-        }
-      },
-      style: ButtonStyle(
-        overlayColor: MaterialStateProperty.all(Colors.red.withOpacity(0.1)),
+    return Tooltip(
+      child: GestureDetector(
+        onTap: () {
+          final logic = Get.find<SubjectLogic>();
+          logic.markChunk(chunk, !chunk.marked);
+        },
+        child: Icon(
+          Icons.star,
+          color: chunk.marked? Colors.amber : Colors.grey,
+        ),
       ),
-      child: Text(
-        'Fail',
-        style: TextStyle(color: Colors.red),
-      ),
+      message: 'Mark this chunk',
     );
+    // return SwitchWithDescription(
+    //   description: 'Mark',
+    //   initialValue: chunk.marked,
+    //   onChanged: (value) {
+    //     chunk.marked = value;
+    //     chunk.save();
+    //   },
+    // );
   }
 }
 
@@ -62,6 +69,7 @@ class ChunkReviewActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         // FailChunkAction(chunk: chunk),
+        MarkChunkAction(chunk: chunk),
         EditChunkAction(chunk: chunk),
       ],
     );

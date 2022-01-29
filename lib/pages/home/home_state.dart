@@ -4,9 +4,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/services/services.dart';
 
-
 class HomeState {
-  static final pageTitles = <String>['Chunk Collection', 'Search Everything'];
+  static final pageTitles = <String>[
+    'Chunk Collection',
+    'Search Everything',
+    'Statistics'
+  ];
 
   final PageController pageController = PageController();
   final RxInt currentIndex = 0.obs;

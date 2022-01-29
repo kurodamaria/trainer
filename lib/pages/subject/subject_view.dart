@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:trainer/app/routes.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/pages/subject/subject_state.dart';
-import 'package:trainer/pages/subjects/subjects_state.dart';
 import 'package:trainer/widgets/add_floating_action_button.dart';
 import 'package:trainer/widgets/chunk_card.dart';
 import 'package:trainer/widgets/chunk_review_actions.dart';
 import 'package:trainer/widgets/delete_by_dismiss_hive_box_item.dart';
 import 'package:trainer/widgets/hive_box_list_builder.dart';
+import 'package:trainer/widgets/subjects.dart';
 
 import 'subject_logic.dart';
 
@@ -29,7 +29,7 @@ class SubjectPage extends StatelessWidget {
           _AllChunks(),
           _MarkedChunks(),
         ],
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: state.pageController,
       ),
       bottomNavigationBar: Obx(() {
@@ -38,7 +38,7 @@ class SubjectPage extends StatelessWidget {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.all_inbox), label: 'All'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notification_important), label: 'Marked'),
+                icon: Icon(Icons.star), label: 'Marked'),
           ],
           onTap: (index) {
             logic.switchFilter(index);
@@ -46,19 +46,17 @@ class SubjectPage extends StatelessWidget {
         );
       }),
       endDrawer: Drawer(
-        child: Image.network(
-            'https://simkl.in/episodes/83/8387549bff4f358c8_w.jpg'),
+        child: SubjectDrawer(subject: state.subject),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+          FloatingActionButtonLocation.endDocked,
       floatingActionButton: AddFloatingActionButton(
+        toolTip: 'Add a new chunk',
         onPressed: () async {
           Get.toNamed(
             Routes.editChunkPage.name,
             arguments: {
-              'chunk': Chunk.minimal(
-                content: '',
-                ref: '',
+              'chunk': Chunk.minimal( content: '', ref: '',
                 subjectKey: state.subject.id,
               ),
               'title': 'Add new chunk',
@@ -106,10 +104,7 @@ class _MarkedChunks extends StatelessWidget {
       itemBuilder: (c, index, item) => DeleteByDismissHiveBoxItem<Chunk>(
         itemBuilder: (BuildContext context, item) {
           return ChunkCard(
-            chunk: item,
-            trailing: ChunkReviewActions(chunk: item),
-          );
-        },
+            chunk: item, trailing: ChunkReviewActions(chunk: item), ); },
         item: item,
       ),
     );

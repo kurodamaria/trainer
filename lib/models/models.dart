@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:trainer/services/services.dart';
 
@@ -55,6 +56,17 @@ class Subject extends HiveObject {
       await super.save();
     }
   }
+
+  Future<Map<String, dynamic>> toJson() async {
+    return {
+      'id': id,
+      'name': name,
+      'chunkBoxName': chunkBoxName,
+      'createdAt': createdAt.toIso8601String(),
+      'chunks': (await Hive.openBox<Chunk>(chunkBoxName)).values.map((e) =>
+          e.toJson()).toList()
+    };
+  }
 }
 
 @HiveType(typeId: 2)
@@ -80,16 +92,13 @@ class Chunk extends HiveObject {
   final String chunkBoxName;
 
   @HiveField(7)
-  int failTimes;
-
-  @HiveField(8)
   String hints;
 
-  @HiveField(9)
+  @HiveField(8)
   List<String> tags;
 
-  @HiveField(10)
-  bool? markedNeedReview;
+  @HiveField(9)
+  bool marked;
 
   Chunk({
     required this.content,
@@ -98,10 +107,9 @@ class Chunk extends HiveObject {
     required this.subjectKey,
     required this.id,
     required this.chunkBoxName,
-    required this.failTimes,
     required this.hints,
     required this.tags,
-    this.markedNeedReview,
+    required this.marked,
   });
 
   factory Chunk.minimal({
@@ -117,10 +125,24 @@ class Chunk extends HiveObject {
       subjectKey: subjectKey,
       id: id,
       chunkBoxName: subjectKey,
-      failTimes: 0,
       hints: '',
       tags: [],
+      marked: false,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'chunkBoxName': chunkBoxName,
+      'hints': hints,
+      'tags': tags,
+      'createdAt': createdAt.toIso8601String(),
+      'marked': marked,
+      'content': content,
+      'ref': ref,
+      'subjectKey': subjectKey,
+    };
   }
 
   @override

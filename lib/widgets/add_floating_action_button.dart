@@ -10,6 +10,7 @@ class AddFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      mini: true,
       onPressed: onPressed,
       child: const Icon(Icons.add),
       tooltip: toolTip,

@@ -39,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
           },
           itemCount: state!.length,
         ),
-        onEmpty: const NotFound(),
+        onEmpty: const NotFound(msg: 'Empty'),
         onLoading: const Center(child: LoadingIndicator()),
         onError: (msg) => Center(
           child:

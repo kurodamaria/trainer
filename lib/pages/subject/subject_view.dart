@@ -49,7 +49,7 @@ class SubjectPage extends StatelessWidget {
         child: SubjectDrawer(subject: state.subject),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.endDocked,
+          FloatingActionButtonLocation.endTop,
       floatingActionButton: AddFloatingActionButton(
         toolTip: 'Add a new chunk',
         onPressed: () async {

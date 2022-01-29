@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
       drawer: const Drawer(
         child: Center(child: Text('This drawe is useful in the future.')),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: AddFloatingActionButton(
         onPressed: _createANewCollection,
         toolTip: 'Create a new collection',

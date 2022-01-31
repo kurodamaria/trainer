@@ -32,11 +32,13 @@ class HiveBoxListBuilder<T> extends StatelessWidget {
             }
             return ScrollConfiguration(
               behavior: const CupertinoScrollBehavior(),
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return itemBuilder(context, index, filtered.elementAt(index));
-                },
-                itemCount: filtered.length,
+              child: Scrollbar(
+                child: ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return itemBuilder(context, index, filtered.elementAt(index));
+                  },
+                  itemCount: filtered.length,
+                ),
               ),
             );
           },

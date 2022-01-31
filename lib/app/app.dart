@@ -14,9 +14,7 @@ class TrainerApp extends StatelessWidget {
       initialRoute: Routes.initialRoute,
       theme: ThemeData.light().copyWith(
           dividerColor: Colors.black,
-          primaryColor: Colors.black,
-          backgroundColor: Colors.white,
-          appBarTheme: ThemeData.light().appBarTheme.copyWith(
+          primaryColor: Colors.black, backgroundColor: Colors.white, appBarTheme: ThemeData.light().appBarTheme.copyWith(
               color: Colors.white,
               systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
                   statusBarColor: Colors.white,
@@ -36,7 +34,7 @@ class TrainerApp extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(
         primaryColor: Colors.green,
         backgroundColor: Colors.black,
-        scaffoldBackgroundColor: Colors.white10,
+        scaffoldBackgroundColor: Colors.white30,
         dividerColor: Colors.white60,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.black,

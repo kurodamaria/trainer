@@ -32,7 +32,6 @@ class ChunkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Card(
-        // color: showLevel ? calculateLevel(chunk.failTimes) : null,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

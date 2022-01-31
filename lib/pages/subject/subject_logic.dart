@@ -46,4 +46,8 @@ class SubjectLogic extends GetxController {
     await _closeBox();
     super.onClose();
   }
+
+  void switchSort(int index) {
+
+  }
 }

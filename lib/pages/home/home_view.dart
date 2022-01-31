@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
         title: Obx(() {
           return Text(state.currentPageTitle.value);
         }),
-        actions: [const _ExportAsJson()],
+        actions: const [_ExportAsJson(), _SortByAction()],
       ),
       body: PageView(
         children: [
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
       drawer: const Drawer(
         child: Center(child: Text('This drawe is useful in the future.')),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: AddFloatingActionButton(
         onPressed: _createANewCollection,
         toolTip: 'Create a new collection',
@@ -119,12 +119,19 @@ class _SearchPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Content'),
+            title: const Text('Has Math'),
             leading: const Icon(Icons.star, color: Colors.yellow),
             onTap: () {
-              if (!Get.isSnackbarOpen) {
-                Get.rawSnackbar(message: 'Not implemented yet.');
-              }
+              final logic = Get.find<HomeLogic>();
+              Get.toNamed(
+                Routes.searchPage.name,
+                arguments: {
+                  'chunkBoxes': logic.state.subjectBox.values
+                      .map((e) => e.chunkBoxName)
+                      .toList(),
+                  'matcher': ChunkFilters.hasMathjax,
+                },
+              );
             },
           ),
           ListTile(
@@ -159,11 +166,23 @@ class _ExportAsJson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: (){
+      onPressed: () {
         Get.dialog(const ExportImportDialog());
       },
       icon: const Icon(Icons.import_export),
       tooltip: 'Export as/Import from json',
+    );
+  }
+}
+
+class _SortByAction extends StatelessWidget {
+  const _SortByAction({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {},
+      icon: Icon(Icons.sort),
     );
   }
 }

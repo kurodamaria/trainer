@@ -8,6 +8,7 @@ import 'package:trainer/widgets/chunk_card.dart';
 import 'package:trainer/widgets/chunk_review_actions.dart';
 import 'package:trainer/widgets/delete_by_dismiss_hive_box_item.dart';
 import 'package:trainer/widgets/hive_box_list_builder.dart';
+import 'package:trainer/widgets/sort_button.dart';
 import 'package:trainer/widgets/subjects.dart';
 
 import 'subject_logic.dart';
@@ -23,6 +24,7 @@ class SubjectPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(state.subject.name),
+        actions: [ChunkSortButton()],
       ),
       body: PageView(
         children: [
@@ -49,7 +51,7 @@ class SubjectPage extends StatelessWidget {
         child: SubjectDrawer(subject: state.subject),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.endTop,
+          FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: AddFloatingActionButton(
         toolTip: 'Add a new chunk',
         onPressed: () async {

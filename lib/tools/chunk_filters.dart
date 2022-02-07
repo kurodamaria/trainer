@@ -1,6 +1,10 @@
 import 'package:trainer/models/models.dart';
+import 'package:trainer/tools/datetime.dart';
 
 class ChunkFilters {
+  static bool nDaysAgo(Chunk chunk, int n) {
+    return DateTimeTools.daysAgo(chunk.createdAt) == n;
+  }
   static bool onlyMarkedFilter(Chunk chunk) {
     return chunk.marked == true;
   }

@@ -14,9 +14,7 @@ class SwitchWithDescription extends StatelessWidget {
   final String description;
   final RxBool value;
   final TextStyle? descriptionStyle;
-  final ValueChanged? onChanged;
-
-  static final _defaultDescriptionStyle = TextStyle(fontSize: 12);
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class SwitchWithDescription extends StatelessWidget {
         Text(
           description,
           style: Get.textTheme.bodyText1!
-              .merge(_defaultDescriptionStyle)
+              .merge(DefaultTextStyle.of(context).style)
               .merge(descriptionStyle),
         ),
       ],

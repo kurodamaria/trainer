@@ -1,9 +1,9 @@
 import 'dart:ffi';
 
-import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:trainer/models/models.dart';
 import 'package:uuid/uuid.dart';
+import 'package:trainer/services/settings.dart' as settings;
 
 
 part 'persistence.dart';

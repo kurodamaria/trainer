@@ -7,6 +7,8 @@ import 'package:trainer/pages/preview_chunk/preview_chunk_binding.dart';
 import 'package:trainer/pages/preview_chunk/preview_chunk_view.dart';
 import 'package:trainer/pages/search/search_binding.dart';
 import 'package:trainer/pages/search/search_view.dart';
+import 'package:trainer/pages/settings/settings_binding.dart';
+import 'package:trainer/pages/settings/settings_view.dart';
 import 'package:trainer/pages/subject/subject_binding.dart';
 import 'package:trainer/pages/subject/subject_view.dart';
 import 'package:trainer/pages/test/test_binding.dart';
@@ -43,6 +45,11 @@ class Routes {
     page: () => HomePage(),
     binding: HomeBinding()
   );
+  static final settingsPage = GetPage(
+    name: '/settings',
+    page: () => SettingsPage(),
+    binding: SettingsBinding(),
+  );
 
   static const initialRoute = '/';
 
@@ -53,5 +60,6 @@ class Routes {
     editChunkPage,
     testPage,
     searchPage,
+    settingsPage,
   ];
 }

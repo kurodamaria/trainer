@@ -3,8 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:trainer/models/models.dart';
+import 'package:trainer/services/services.dart';
 import 'package:trainer/tools/datetime.dart';
 import 'package:trainer/widgets/markdown.dart';
+import 'package:trainer/services/settings.dart' as settings;
 import 'package:trainer/widgets/switch_with_description.dart';
 
 class ChunkCard extends StatelessWidget {
@@ -26,7 +28,9 @@ class ChunkCard extends StatelessWidget {
   final bool showLevel;
 
   /// For render equations and handle render exceptions of flutter_tex.
-  final RxBool _renderMarkdown = false.obs;
+  final RxBool _renderMarkdown = (Services.persist.getCardPreviewPreference() ==
+          settings.cardPreviewMarkdown)
+      .obs;
 
   @override
   Widget build(BuildContext context) {

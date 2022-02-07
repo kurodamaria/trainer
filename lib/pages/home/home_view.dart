@@ -56,9 +56,7 @@ class HomePage extends StatelessWidget {
           },
         );
       }),
-      drawer: const Drawer(
-        child: Center(child: Text('This drawe is useful in the future.')),
-      ),
+      drawer: HomeViewDrawer(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: AddFloatingActionButton(
         onPressed: _createANewCollection,
@@ -72,6 +70,27 @@ class HomePage extends StatelessWidget {
     if (result != null) {
       await logic.addNewCollection(name: result[0]);
     }
+  }
+}
+
+class HomeViewDrawer extends StatelessWidget {
+  const HomeViewDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          DrawerHeader(child: Container(color: Colors.blue)),
+          ListTile(
+            title: Text('Settings'),
+            onTap: () {
+              Get.toNamed(Routes.settingsPage.name);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -141,6 +160,24 @@ class _SearchPage extends StatelessWidget {
               if (!Get.isSnackbarOpen) {
                 Get.rawSnackbar(message: 'Not implemented yet.');
               }
+            },
+          ),
+          ListTile(
+            title: const Text('0 Days Ago'),
+            leading: const Icon(Icons.star, color: Colors.yellow),
+            onTap: () {
+              final logic = Get.find<HomeLogic>();
+              Get.toNamed(
+                Routes.searchPage.name,
+                arguments: {
+                  'chunkBoxes': logic.state.subjectBox.values
+                      .map((e) => e.chunkBoxName)
+                      .toList(),
+                  'matcher': (Chunk chunk) {
+                    return ChunkFilters.nDaysAgo(chunk, 0);
+                  },
+                },
+              );
             },
           ),
         ],

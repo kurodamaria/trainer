@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trainer/tools/eximport.dart';
+import 'package:trainer/widgets/loading_dialog.dart';
 
 class ExportImportDialog extends StatelessWidget {
   const ExportImportDialog({Key? key}) : super(key: key);
@@ -15,13 +17,16 @@ class ExportImportDialog extends StatelessWidget {
             const Text('Export & Import'),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 TextButton(
                   onPressed: exportAll,
                   child: Text('Export'),
                 ),
                 TextButton(
-                  onPressed: importFromFile,
+                  onPressed: () {
+                    Get.back();
+                    showLoadingDialog(future: importFromFile());
+                  },
                   child: Text('Import'),
                 ),
               ],

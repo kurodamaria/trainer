@@ -5,11 +5,11 @@ import 'package:trainer/models/models.dart';
 import 'package:uuid/uuid.dart';
 import 'package:trainer/services/settings.dart' as settings;
 
-
 part 'persistence.dart';
-part 'global_env.dart';
-part 'yorozuya.dart';
 
+part 'global_env.dart';
+
+part 'yorozuya.dart';
 
 class _Services {
   final persist = _PersistenceService();
@@ -28,7 +28,10 @@ class _Services {
   String uuid() {
     return _uuidGenerator.v4();
   }
-}
 
+  Future<bool> boxExists(String name) {
+    return Hive.boxExists(name);
+  }
+}
 
 final Services = _Services();

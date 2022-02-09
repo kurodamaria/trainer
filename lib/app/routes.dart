@@ -5,6 +5,8 @@ import 'package:trainer/pages/home/home_binding.dart';
 import 'package:trainer/pages/home/home_view.dart';
 import 'package:trainer/pages/preview_chunk/preview_chunk_binding.dart';
 import 'package:trainer/pages/preview_chunk/preview_chunk_view.dart';
+import 'package:trainer/pages/resolve_conflict/resolve_conflict_binding.dart';
+import 'package:trainer/pages/resolve_conflict/resolve_conflict_view.dart';
 import 'package:trainer/pages/search/search_binding.dart';
 import 'package:trainer/pages/search/search_view.dart';
 import 'package:trainer/pages/settings/settings_binding.dart';
@@ -50,6 +52,12 @@ class Routes {
     page: () => SettingsPage(),
     binding: SettingsBinding(),
   );
+  static final resolveConflictPage = GetPage(
+    name: '/resolve-conflict',
+    page: () => ResolveConflictPage(),
+    binding: ResolveConflictBinding(),
+  );
+
 
   static const initialRoute = '/';
 
@@ -61,5 +69,6 @@ class Routes {
     testPage,
     searchPage,
     settingsPage,
+    resolveConflictPage,
   ];
 }

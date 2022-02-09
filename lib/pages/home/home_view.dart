@@ -7,6 +7,7 @@ import 'package:trainer/tools/chunk_filters.dart';
 import 'package:trainer/widgets/add_floating_action_button.dart';
 import 'package:trainer/widgets/export_import_dialog.dart';
 import 'package:trainer/widgets/hive_box_list_builder.dart';
+import 'package:trainer/widgets/number_input_dialog.dart';
 import 'package:trainer/widgets/subjects.dart';
 import 'package:trainer/widgets/text_input_dialog.dart';
 
@@ -123,7 +124,7 @@ class _SearchPage extends StatelessWidget {
         children: [
           ListTile(
             title: const Text('All Marked'),
-            leading: const Icon(Icons.star, color: Colors.yellow),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
             onTap: () {
               final logic = Get.find<HomeLogic>();
               Get.toNamed(
@@ -139,7 +140,7 @@ class _SearchPage extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Has Math'),
-            leading: const Icon(Icons.star, color: Colors.yellow),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
             onTap: () {
               final logic = Get.find<HomeLogic>();
               Get.toNamed(
@@ -154,8 +155,8 @@ class _SearchPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Tag'),
-            leading: const Icon(Icons.star, color: Colors.yellow),
+            title: const Text('Has Content...'),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
             onTap: () {
               if (!Get.isSnackbarOpen) {
                 Get.rawSnackbar(message: 'Not implemented yet.');
@@ -163,21 +164,27 @@ class _SearchPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('0 Days Ago'),
-            leading: const Icon(Icons.star, color: Colors.yellow),
-            onTap: () {
-              final logic = Get.find<HomeLogic>();
-              Get.toNamed(
-                Routes.searchPage.name,
-                arguments: {
-                  'chunkBoxes': logic.state.subjectBox.values
-                      .map((e) => e.chunkBoxName)
-                      .toList(),
-                  'matcher': (Chunk chunk) {
-                    return ChunkFilters.nDaysAgo(chunk, 0);
+            title: const Text('Days Ago...'),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
+            onTap: () async {
+              final number = await Get.dialog(
+                NumberInputDialog(min: 0, max: double.infinity),
+              ) as int;
+
+              if (!number.isNaN) {
+                final logic = Get.find<HomeLogic>();
+                Get.toNamed(
+                  Routes.searchPage.name,
+                  arguments: {
+                    'chunkBoxes': logic.state.subjectBox.values
+                        .map((e) => e.chunkBoxName)
+                        .toList(),
+                    'matcher': (chunk) {
+                      return ChunkFilters.nDaysAgo(chunk, number);
+                    },
                   },
-                },
-              );
+                );
+              }
             },
           ),
         ],

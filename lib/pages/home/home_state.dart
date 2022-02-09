@@ -7,7 +7,7 @@ import 'package:trainer/services/services.dart';
 class HomeState {
   static final pageTitles = <String>[
     'Chunk Collection',
-    'Search Everything',
+    'Search',
     'Statistics'
   ];
 

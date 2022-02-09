@@ -28,4 +28,8 @@ class ChunkFilters {
   static bool hasMathjax(Chunk chunk) {
     return hasMathjaxContent(chunk) || hasMathjaxHint(chunk);
   }
+
+  static bool hasContent(Chunk chunk, String content) {
+    return chunk.content.contains(content);
+  }
 }

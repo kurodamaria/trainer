@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:trainer/models/models.dart';
 import 'package:trainer/services/services.dart';
 import 'package:path/path.dart' as path;

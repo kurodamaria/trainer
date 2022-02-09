@@ -17,7 +17,9 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final logic = Get.find<HomeLogic>();
-  final state = Get.find<HomeLogic>().state;
+  final state = Get
+      .find<HomeLogic>()
+      .state;
 
   @override
   Widget build(BuildContext context) {
@@ -99,15 +101,18 @@ class CollectionsView extends StatelessWidget {
   CollectionsView({Key? key}) : super(key: key);
 
   final logic = Get.find<HomeLogic>();
-  final state = Get.find<HomeLogic>().state;
+  final state = Get
+      .find<HomeLogic>()
+      .state;
 
   @override
   Widget build(BuildContext context) {
     return HiveBoxListBuilder<Subject>(
-      itemBuilder: (context, index, item) => Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: SubjectView(subject: item),
-      ),
+      itemBuilder: (context, index, item) =>
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: SubjectView(subject: item),
+          ),
       boxName: state.subjectBox.name,
     );
   }
@@ -185,6 +190,42 @@ class _SearchPage extends StatelessWidget {
                   },
                 );
               }
+            },
+          ),
+          ListTile(
+            title: const Text('Today (within 24h)'),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
+            onTap: () async {
+              final logic = Get.find<HomeLogic>();
+              Get.toNamed(
+                Routes.searchPage.name,
+                arguments: {
+                  'chunkBoxes': logic.state.subjectBox.values
+                      .map((e) => e.chunkBoxName)
+                      .toList(),
+                  'matcher': (chunk) {
+                    return ChunkFilters.nDaysAgo(chunk, 0);
+                  },
+                },
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Yesterday (24h, 48h)'),
+            leading: const Icon(Icons.search, color: Colors.lightBlueAccent),
+            onTap: () async {
+              final logic = Get.find<HomeLogic>();
+              Get.toNamed(
+                Routes.searchPage.name,
+                arguments: {
+                  'chunkBoxes': logic.state.subjectBox.values
+                      .map((e) => e.chunkBoxName)
+                      .toList(),
+                  'matcher': (chunk) {
+                    return ChunkFilters.nDaysAgo(chunk, 1);
+                  },
+                },
+              );
             },
           ),
         ],

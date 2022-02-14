@@ -12,5 +12,6 @@ class DatabaseListInitial<T> extends DatabaseListState<T> {
 }
 
 class StateDatabaseListUpdated<T> extends DatabaseListState<T> {
-  const StateDatabaseListUpdated(MultiSelectable<T> query) : super(query);
+  const StateDatabaseListUpdated(MultiSelectable<T> query, this.relatedIntInfo) : super(query);
+  final int relatedIntInfo;
 }

@@ -29,8 +29,9 @@ class ChunksPage extends StatelessWidget {
               ? Text(Get.arguments['title'])
               : null,
           actions: [
-            const _BatchCreateChunksFromImages(),
-            if (Get.arguments['subject'] != null) const _AddNewChunkAction()
+            if (Get.arguments['subject'] is Subject)
+              const _BatchCreateChunksFromImages(),
+            if (Get.arguments['subject'] is Subject) const _AddNewChunkAction()
           ],
         ),
         body: const ChunkListView(),
@@ -86,12 +87,17 @@ class _BatchCreateChunksFromImages extends StatelessWidget {
     if (result != null) {
       final bloc = context.read<DatabaseListBloc<Chunk>>();
       for (File f in result) {
-        final c = ChunksCompanion.insert(
-          reference: basename(f.path),
-          subject: s.id,
-          image: Value(await f.readAsBytes()),
-        );
-        bloc.add(EventDatabaseListAddChunk(itemToAdd: c));
+        final compressed = await compressImageForStore(f);
+        if (compressed != null) {
+          final c = ChunksCompanion.insert(
+            reference: basename(f.path),
+            subject: s.id,
+            image: Value(await f.readAsBytes()),
+          );
+          bloc.add(EventDatabaseListAddChunk(itemToAdd: c));
+        } else {
+          Get.snackbar('Error', 'Compressing image failed for some reason :(.');
+        }
       }
     }
   }

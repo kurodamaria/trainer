@@ -18,6 +18,30 @@ class ChunkRepository {
 
   MultiSelectable<Chunk> get allChunks => database.chunks.select();
 
+  // MultiSelectable<Chunk> get you =>
+  //     database.chunks.select()..where((tbl) => tbl.createdAt.is);
+
+  MultiSelectable<Chunk> get shitty => database.chunks.select()
+    ..where((tbl) =>
+        tbl.effectiveLevel.isBetween(const Constant(0), const Constant(0.2)));
+
+  MultiSelectable<Chunk> get bad => database.chunks.select()
+    ..where((tbl) =>
+        tbl.effectiveLevel.isBetween(const Constant(0.3), const Constant(0.4)));
+
+  MultiSelectable<Chunk> get mild =>
+      database.chunks.select()..where((tbl) => tbl.effectiveLevel.equals(0.5));
+
+  MultiSelectable<Chunk> get normal => database.chunks.select()
+    ..where((tbl) =>
+        tbl.effectiveLevel.isBetween(const Constant(0.6), const Constant(0.8)));
+
+  MultiSelectable<Chunk> get excellent =>
+      database.chunks.select()..where((tbl) => tbl.effectiveLevel.equals(0.9));
+
+  MultiSelectable<Chunk> get god =>
+      database.chunks.select()..where((tbl) => tbl.effectiveLevel.equals(1.0));
+
   MultiSelectable<Chunk> allChunksOfSubject(Subject subject) {
     return database.chunks.select()
       ..where((tbl) => tbl.subject.equals(subject.id));
@@ -86,8 +110,8 @@ class ChunkRepository {
     }
   }
 
-  Future<void> deleteChunk(Chunk itemToDelete) async {
-    await database.delete(database.chunks).delete(itemToDelete);
+  Future<int> deleteChunk(Chunk itemToDelete) async {
+    return await database.delete(database.chunks).delete(itemToDelete);
   }
 
   Future<Chunk> chunkOfId(int rowId) async {

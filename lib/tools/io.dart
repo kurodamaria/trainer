@@ -6,7 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Compress file and get Uint8List
-Future<Uint8List?> compressImage(File file, {int quality = 70}) async {
+Future<Uint8List?> compressImageForStore(File file, {int quality = 40}) async {
   var result = await FlutterImageCompress.compressWithFile(
     file.absolute.path,
     quality: quality,
@@ -16,14 +16,16 @@ Future<Uint8List?> compressImage(File file, {int quality = 70}) async {
 
 Future<Uint8List?> compressImageForPreview(Uint8List imageData,
     {int quality = 40}) async {
-  var result = await FlutterImageCompress.compressWithList(
-    imageData,
-    quality: quality,
-  );
-  return result;
+  return imageData;
+  // var result = await FlutterImageCompress.compressWithList(
+  //   imageData,
+  //   quality: quality,
+  // );
+  // return result;
 }
 
 Future<File?> pickAFile({FileType type = FileType.any}) async {
+  await FilePicker.platform.clearTemporaryFiles();
   if (await Permission.manageExternalStorage.request().isGranted) {
     FilePickerResult? result = await FilePicker.platform.pickFiles(type: type);
 
@@ -37,6 +39,7 @@ Future<File?> pickAFile({FileType type = FileType.any}) async {
 }
 
 Future<List<File>?> pickMultipleFile() async {
+  await FilePicker.platform.clearTemporaryFiles();
   FilePickerResult? result =
       await FilePicker.platform.pickFiles(allowMultiple: true);
 
@@ -49,6 +52,7 @@ Future<List<File>?> pickMultipleFile() async {
 }
 
 Future<Directory?> pickADirectory() async {
+  await FilePicker.platform.clearTemporaryFiles();
   if (await Permission.manageExternalStorage.request().isGranted) {
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
     if (selectedDirectory == null) {

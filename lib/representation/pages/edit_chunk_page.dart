@@ -265,7 +265,7 @@ class _AddImageFromCameraAction extends StatelessWidget {
         final XFile? photo =
             await Get.find<ImagePicker>().pickImage(source: ImageSource.camera);
         if (photo != null) {
-          final compressed = await compressImage(File(photo.path));
+          final compressed = await compressImageForStore(File(photo.path));
           final bloc = context.read<EditChunkBloc>();
           if (compressed != null) {
             bloc.add(EventEditChunkModify(
@@ -274,22 +274,7 @@ class _AddImageFromCameraAction extends StatelessWidget {
           } else {
             Get.snackbar('Pick Image Failed', 'Cannot Compress the image???');
           }
-
-          // Get.to(() => _CropImagePage(file: File(photo.path)));
-          // final bytes = await photo.readAsBytes();
-          // final bloc = context.read<EditChunkBloc>();
-          // bloc.add(EventEditChunkModify(
-          //     bloc.state.companion.copyWith(image: Value(bytes))));
-          // Get.back();
         }
-        // final f = await pickAFile(type: FileType.image);
-        // if (f != null) {
-        //   final bytes = await f.readAsBytes();
-        //   final bloc = context.read<EditChunkBloc>();
-        //   bloc.add(EventEditChunkModify(
-        //       bloc.state.companion.copyWith(image: Value(bytes))));
-        //   Get.back();
-        // }
       },
     );
   }
@@ -327,11 +312,15 @@ class _AddImageFromFileAction extends StatelessWidget {
       onTap: () async {
         final file = await pickAFile(type: FileType.any);
         if (file != null) {
-          final bytes = await file.readAsBytes();
-          final bloc = context.read<EditChunkBloc>();
-          bloc.add(EventEditChunkModify(
-              bloc.state.companion.copyWith(image: Value(bytes))));
-          Get.back();
+          final compressed = await compressImageForStore(file);
+          if (compressed != null) {
+            final bloc = context.read<EditChunkBloc>();
+            bloc.add(EventEditChunkModify(
+                bloc.state.companion.copyWith(image: Value(compressed))));
+            Get.back();
+          } else {
+            Get.snackbar('Error', 'Image compression failed somehow :(.');
+          }
         }
       },
     );

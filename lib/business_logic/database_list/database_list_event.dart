@@ -21,6 +21,8 @@ class EventDatabaseListAddSubject extends DatabaseListEvent {
   final SubjectsCompanion itemToAdd;
 }
 
+class EventCreateTodayBox extends DatabaseListEvent {}
+
 class EventDatabaseListDeleteSubject extends DatabaseListEvent {
   EventDatabaseListDeleteSubject({required this.itemToDelete});
 

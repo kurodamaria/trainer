@@ -20,3 +20,9 @@ class EventDatabaseListAddSubject extends DatabaseListEvent {
 
   final SubjectsCompanion itemToAdd;
 }
+
+class EventDatabaseListDeleteSubject extends DatabaseListEvent {
+  EventDatabaseListDeleteSubject({required this.itemToDelete});
+
+  final Subject itemToDelete;
+}

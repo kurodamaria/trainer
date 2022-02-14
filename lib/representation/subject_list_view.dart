@@ -9,6 +9,7 @@ import 'package:trainer/representation/database_list_view.dart';
 import 'package:trainer/representation/database_query_builder.dart';
 import 'package:trainer/representation/pages/chunks_page.dart';
 import 'package:trainer/tools/datetime.dart';
+import 'package:trainer/widgets/confirm_dialog.dart';
 import 'package:trainer/widgets/loading_indicator.dart';
 
 import '../business_logic/subject/subject_bloc.dart';
@@ -35,8 +36,16 @@ class SubjectListView extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Get.to(() => ViewChunks(subject: s));
               ChunksPage.ofSubject(s);
+            },
+            onLongPress: () async {
+              final result = await Get.dialog(const ConfirmDialog(
+                  msg: 'You cannot undo this.', action: 'Delete'));
+              if (result == true) {
+                context
+                    .read<DatabaseListBloc<Subject>>()
+                    .add(EventDatabaseListDeleteSubject(itemToDelete: s));
+              }
             },
           ),
         );

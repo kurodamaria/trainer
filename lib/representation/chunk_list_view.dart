@@ -16,6 +16,7 @@ import 'package:trainer/tools/chunk_transforms.dart';
 import 'package:trainer/tools/datetime.dart';
 import 'package:trainer/tools/io.dart';
 import 'package:trainer/tools/mathjax_in_plaintext.dart';
+import 'package:trainer/widgets/confirm_dialog.dart';
 import 'package:trainer/widgets/error_box.dart';
 import 'package:trainer/widgets/loading_indicator.dart';
 
@@ -79,6 +80,15 @@ class _ChunkItem extends StatelessWidget {
           ),
           onTap: () {
             ChunkDetailPage.ofChunk(c, context.read<ChunkBloc>());
+          },
+          onLongPress: () async {
+            final result = await Get.dialog(const ConfirmDialog(
+                msg: 'You cannot undo this.', action: 'Delete'));
+            if (result == true) {
+              context
+                  .read<DatabaseListBloc<Chunk>>()
+                  .add(EventDatabaseListDeleteChunk(itemToDelete: c));
+            }
           },
         );
       },

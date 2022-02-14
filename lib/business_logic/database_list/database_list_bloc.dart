@@ -24,6 +24,10 @@ class DatabaseListBloc<T>
       await repository.deleteChunk(event.itemToDelete);
       emit(StateDatabaseListUpdated<T>(state.query));
     });
+    on<EventDatabaseListDeleteSubject>((event, emit) async {
+      await repository.deleteSubject(event.itemToDelete);
+      emit(StateDatabaseListUpdated<T>(state.query));
+    });
     on<EventDatabaseListAddSubject>((event, emit) async {
       await repository.addSubject(event.itemToAdd);
       emit(StateDatabaseListUpdated<T>(state.query));

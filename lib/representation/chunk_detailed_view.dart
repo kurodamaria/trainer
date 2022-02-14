@@ -16,7 +16,7 @@ class ChunkDetailedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
+      child: ListView(
         children: const [
           _DetailedHead(),
           _EffectivenessSlider(),
